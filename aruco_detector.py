@@ -6,7 +6,7 @@ import numpy as np
 cam = Picamera2()
 config = cam.create_still_configuration(
     main={"format": 'RGB888', "size": (400, 300)}, 
-    controls={"FrameDurationLimits": (50000, 50000)},
+    controls={"FrameDurationLimits": (50000, 50000)},  # 20 fps
 )
 cam.configure(config)
 cam.start()
@@ -16,9 +16,7 @@ aruco_params = cv.aruco.DetectorParameters_create()
 # LOOP
 while True:
     im = cam.capture_array()
-    # im_resize = cv.resize(im_rgb, (400, 300))
     corners, ids, reject_candidates = cv.aruco.detectMarkers(
-        # im_resize,
         im,
         aruco_dict,
         parameters=aruco_params,
